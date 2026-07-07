@@ -184,7 +184,7 @@ extension EXT4 {
                     blocks: nil,
                     link: targetNode.inode
                 ))
-            parentTreeNode.children.append(linkTreeNodePtr)
+            parentTreeNode.addChild(linkTreeNodePtr)
             parentTreeNodePtr.pointee = parentTreeNode
         }
 
@@ -252,9 +252,7 @@ extension EXT4 {
                 }
             }
             parentInodePtr.pointee = parentInode
-            parentNode.children.removeAll { childPtr in
-                childPtr.pointee.name == pathComponent
-            }
+            parentNode.removeChild(named: pathComponent)
             parentNodePtr.pointee = parentNode
 
             if let hardlink = pathNode.link {
@@ -410,7 +408,7 @@ extension EXT4 {
                         children: [],
                         blocks: (startBlock, endBlock)
                     ))
-                parentTreeNode.children.append(childTreeNodePtr)
+                parentTreeNode.addChild(childTreeNodePtr)
                 parentTreeNodePtr.pointee = parentTreeNode
             }
             childInode.mode = mode
